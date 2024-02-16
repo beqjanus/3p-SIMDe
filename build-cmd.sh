@@ -39,7 +39,7 @@ srcenv_file="$tmp_dir/ab_srcenv.sh"
 . "$srcenv_file"
 
 build_id=${AUTOBUILD_BUILD_ID:=0}
-git submodule add https://github.com/simd-everywhere/simde-no-tests
+git clone https://github.com/simd-everywhere/simde-no-tests
 cd ${package_folder}
 package_version="$(git describe --tags --match 'v[0-9]\.[0-9]\.[0-9]' --abbrev=0)"
 cd ..
@@ -47,8 +47,10 @@ cd ..
 echo "${package_version}.${build_id}" > "${stage_dir}/VERSION.txt"
 
 mkdir -p "${stage_dir}/include/${package_name}"
-
-cp -r ./${package_folder} "${stage_dir}/include/${package_name}/"
+rm -rf "${package_folder}/.git"
+cp -r "${package_folder}" "${stage_dir}/include/${package_name}/"
 
 mkdir -p "${stage_dir}/LICENSES"
 cp ${package_folder}/COPYING "${stage_dir}/LICENSES/${package_name}.txt"
+
+rm -rf ${package_folder}
