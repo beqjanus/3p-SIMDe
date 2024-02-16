@@ -33,5 +33,5 @@ jobs:
         shell: bash
         
       - name: rclone copy the packages back to safety
-        run: 'rclone copy autobuild/*.bz2 fs_bundles:'
+        run: 'rclone copy *.bz2 fs_bundles:'
         shell: bash
