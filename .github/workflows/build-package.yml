@@ -1,0 +1,39 @@
+name: Build SIMDe header only package
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - run: pip3 install -r requirements.txt
+
+      - name: Setup rclone and download the folder
+        uses: beqjanus/setup-rclone@main
+        with:
+          rclone_config: ${{ secrets.RCLONE_CONFIG }}
+        shell: bash
+        
+      - name: configure and build the 3p-archive
+        run: |
+          autobuild build -p common --config-file=autobuild.xml
+        shell: bash
+          
+      - name: package the 3p-archive
+        run: |
+          cd autobuild
+          autobuild package -p common --config-file=autobuild.xml
+        shell: bash
+          
+      - name: rclone ls sanity check
+        run: 'rclone ls fs_bundles:'
+        shell: bash
+        
+      - name: rclone copy the packages back to safety
+        run: 'rclone copy autobuild/*.bz2 fs_bundles:'
+        shell: bash
