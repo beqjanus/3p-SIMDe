@@ -17,7 +17,6 @@ jobs:
         uses: beqjanus/setup-rclone@main
         with:
           rclone_config: ${{ secrets.RCLONE_CONFIG }}
-        shell: bash
         
       - name: configure and build the 3p-archive
         run: |
