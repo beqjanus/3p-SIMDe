@@ -1,0 +1,17 @@
+# BuildParams
+#
+
+# Use Public Upload location for this package
+public_build = true
+
+# Set to true to package files in legacy build layout, false for new (autobuild) package layout
+# see http://wiki.secondlife.com/wiki/Autobuild/Package_Layout
+simde-autobuild.build_legacy_package = false
+
+simde-autobuild.PACKAGE_NAME = simde
+
+# Need viewer-build-variables as well as other shared repositories
+# build_variables_repository_url set in TC project hierarchy
+buildscripts_shared_more_NAMEs="build_variables"
+
+# eof
