@@ -25,7 +25,6 @@ jobs:
           
       - name: package the 3p-archive
         run: |
-          cd autobuild
           autobuild package -p common --config-file=autobuild.xml
         shell: bash
           
